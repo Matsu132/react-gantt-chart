@@ -1,5 +1,5 @@
 {
-  "name": "react-gantt-chart",
+  "name": "@matsu1321/react-gantt-chart",
   "version": "1.0.0",
   "description": "Highly performant, interactive Gantt Chart component for React with virtual scrolling support.",
   "main": "dist/index.js",
