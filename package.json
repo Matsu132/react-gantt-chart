@@ -1,0 +1,45 @@
+{
+  "name": "react-gantt-chart",
+  "version": "1.0.0",
+  "description": "Highly performant, interactive Gantt Chart component for React with virtual scrolling support.",
+  "main": "dist/index.js",
+  "module": "dist/index.modern.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.modern.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {},
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
+  },
+
+  "keywords": [
+    "react",
+    "gantt",
+    "gantt-chart",
+    "react-gantt",
+    "timeline",
+    "virtual-scrolling",
+    "performance",
+    "typescript"
+  ],
+  "author": "Matsu132",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Matsu132/react-gantt-chart.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Matsu132/react-gantt-chart/issues"
+  },
+  "homepage": "https://github.com/Matsu132/react-gantt-chart#readme"
+}

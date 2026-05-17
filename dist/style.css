@@ -1,0 +1,235 @@
+/* Main Gantt Canvas Container Styles */
+.ganttOuterWrapper {
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #ebebeb;
+  border-radius: 8px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+  background-color: #ffffff;
+}
+
+.ganttWrapper {
+  display: flex;
+  position: relative;
+  width: 100%;
+  border-bottom: 1px solid #ebebeb;
+}
+
+.ganttResizer {
+  background-color: transparent;
+}
+
+.ganttResizer:hover {
+  background-color: #2563eb;
+}
+
+/* Scroll Sync Selectors */
+.verticalScrollbar {
+  position: absolute;
+  width: 17px;
+  overflow-y: scroll;
+  z-index: 100;
+  border-left: 1px solid #ebebeb;
+  background-color: #fafafa;
+}
+
+.horizontalScrollbar {
+  overflow-x: scroll;
+  height: 17px;
+  width: auto;
+  border-top: 1px solid #ebebeb;
+  background-color: #fafafa;
+}
+
+/* 細いプレミアムスクロールバー */
+.verticalScrollbar::-webkit-scrollbar,
+.horizontalScrollbar::-webkit-scrollbar,
+.ganttTimelineContainer::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.verticalScrollbar::-webkit-scrollbar-track,
+.horizontalScrollbar::-webkit-scrollbar-track,
+.ganttTimelineContainer::-webkit-scrollbar-track {
+  background: #f7f7f7;
+}
+
+.verticalScrollbar::-webkit-scrollbar-thumb,
+.horizontalScrollbar::-webkit-scrollbar-thumb,
+.ganttTimelineContainer::-webkit-scrollbar-thumb {
+  background: #d4d4d8;
+  border-radius: 4px;
+}
+
+.verticalScrollbar::-webkit-scrollbar-thumb:hover,
+.horizontalScrollbar::-webkit-scrollbar-thumb:hover,
+.ganttTimelineContainer::-webkit-scrollbar-thumb:hover {
+  background: #a1a1aa;
+}
+
+/* Left panel: Task List Styles */
+.taskListWrapper {
+  border-right: 1px solid #ebebeb;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.taskListHeader {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: #fafafa;
+  color: #3f3f46;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  box-sizing: border-box;
+}
+
+.taskListHeaderCell {
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.taskListContainer {
+  overflow-y: hidden;
+}
+
+.taskListTableRow {
+  transition:
+    background-color 0.15s ease,
+    border-left-color 0.15s ease;
+  border-left: 3px solid transparent;
+}
+
+.taskListTableRow:hover {
+  background-color: #f7fee7; /* Subtle light green-yellow hint on hover */
+}
+
+.taskListTableRowSelected {
+  background-color: #eff6ff !important; /* Premium light blue highlight */
+  border-left-color: #3b82f6 !important; /* Distinct blue marker */
+}
+
+.taskListExpander {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease;
+}
+
+.taskListExpander:hover {
+  transform: scale(1.15);
+}
+
+/* Right panel: Timeline Styles */
+.ganttTimeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.ganttTimelineContainer {
+  flex-grow: 1;
+}
+
+.calendarSvg {
+  display: block;
+}
+
+.ganttSvg {
+  display: block;
+}
+
+/* Background grid ticks & rows */
+.gridRow {
+  transition: fill 0.1s ease;
+}
+
+.gridRow:hover {
+  fill: #fafafa;
+}
+
+.gridRowLine {
+  stroke: #ebebeb;
+  stroke-width: 1;
+}
+
+.gridTick {
+  stroke: #ebebeb;
+  stroke-width: 1;
+}
+
+.gridTodayHighlight {
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+/* Calendar Timeline labels */
+.calendarHeaderLine {
+  stroke: #e6e6e6;
+  stroke-width: 1;
+}
+
+.calendarHeaderText {
+  font-family: inherit;
+  font-size: 11px;
+}
+
+/* Arrows dependencies connecting lines */
+.arrowPath,
+.dependencyArrow .arrowPath {
+  transition:
+    stroke-width 0.15s ease,
+    stroke 0.15s ease;
+}
+
+.arrow:hover .arrowPath,
+.dependencyArrow:hover .arrowPath {
+  stroke: #f59e0b !important;
+  stroke-width: 2.2 !important;
+}
+
+.arrow:hover .arrowHead,
+.dependencyArrow:hover .arrowHead {
+  fill: #f59e0b !important;
+}
+
+/* Task bars, milestones and labels */
+.barBackground,
+.barProgress,
+.projectBackground,
+.projectProgress,
+.milestoneBackground {
+  transition: filter 0.15s ease;
+}
+
+.taskItemWrapper:hover .barBackground,
+.taskItemWrapper:hover .projectBackground,
+.taskItemWrapper:hover .milestoneBackground {
+  filter: brightness(0.96);
+}
+
+.taskItemWrapper:hover .barProgress,
+.taskItemWrapper:hover .projectProgress {
+  filter: brightness(0.92);
+}
+
+.barLabel,
+.projectLabel,
+.milestoneLabel {
+  font-family: inherit;
+  font-size: 12px;
+  user-select: none;
+}
+
+.barProgressHandle {
+  transition: fill 0.15s ease;
+}
+
+.barProgressHandle:hover {
+  fill: #000000 !important;
+}

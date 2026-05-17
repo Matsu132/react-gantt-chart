@@ -1,0 +1,17 @@
+# Development and testing
+src/
+sandbox/
+.vscode/
+.idea/
+
+# Config files
+tsconfig.json
+vite.config.ts
+.eslintrc*
+.prettierrc*
+vitest.config.ts
+jest.config.js
+
+# Misc
+.DS_Store
+*.log

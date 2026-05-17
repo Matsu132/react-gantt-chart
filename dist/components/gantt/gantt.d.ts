@@ -1,0 +1,4 @@
+import { default as React } from 'react';
+import { GanttProps } from '../../types/public-types';
+
+export declare const Gantt: React.FC<GanttProps>;
