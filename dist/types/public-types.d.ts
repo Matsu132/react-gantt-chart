@@ -90,7 +90,7 @@ export interface StylingOption {
     columnWidth?: number;
     listCellWidth?: string;
     rowHeight?: number;
-    ganttHeight?: number;
+    ganttHeight?: number | string;
     barCornerRadius?: number;
     handleWidth?: number;
     fontFamily?: string;

@@ -643,19 +643,36 @@ const TaskList = ({
         backgroundColor: "#fff"
       },
       children: [
-        /* @__PURE__ */ jsxRuntime.jsx("div", { style: { position: "sticky", top: 0, zIndex: 30, backgroundColor: "#fff" }, children: /* @__PURE__ */ jsxRuntime.jsx(
-          TaskListHeader,
+        /* @__PURE__ */ jsxRuntime.jsx(
+          "div",
           {
-            headerHeight,
-            rowWidth: resolvedRowWidth,
-            fontFamily,
-            fontSize
+            style: {
+              position: "sticky",
+              top: 0,
+              zIndex: 30,
+              backgroundColor: "#fff",
+              width: resolvedRowWidth,
+              overflow: "hidden"
+            },
+            children: /* @__PURE__ */ jsxRuntime.jsx(
+              TaskListHeader,
+              {
+                headerHeight,
+                rowWidth: resolvedRowWidth,
+                fontFamily,
+                fontSize
+              }
+            )
           }
-        ) }),
+        ),
         /* @__PURE__ */ jsxRuntime.jsx(
           "div",
           {
             className: "taskListContainer",
+            style: {
+              width: resolvedRowWidth,
+              overflow: "hidden"
+            },
             children: /* @__PURE__ */ jsxRuntime.jsx(
               TaskListTable,
               {
@@ -1777,13 +1794,66 @@ const Gantt = ({
       milestoneBackgroundSelectedColor
     ]
   );
+  const [measuredHeight, setMeasuredHeight] = React.useState(500);
+  const [measuredTaskListWidth, setMeasuredTaskListWidth] = React.useState(0);
+  const [hasResized, setHasResized] = React.useState(false);
+  const taskListRef = React.useRef(null);
+  React.useEffect(() => {
+    const element = containerRef.current;
+    if (!element) return;
+    if (typeof ganttHeight === "number" && ganttHeight > 0) {
+      setMeasuredHeight(ganttHeight);
+      return;
+    }
+    const updateHeight = () => {
+      if (element.clientHeight > 0) {
+        setMeasuredHeight(element.clientHeight);
+      }
+    };
+    updateHeight();
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const height = entry.target.clientHeight;
+        if (height > 0) {
+          setMeasuredHeight(height);
+        }
+      }
+    });
+    observer.observe(element);
+    return () => {
+      observer.disconnect();
+    };
+  }, [ganttHeight]);
+  React.useEffect(() => {
+    const element = taskListRef.current;
+    if (!element) return;
+    const updateWidth = () => {
+      const rect = element.getBoundingClientRect();
+      if (rect.width > 0) {
+        setMeasuredTaskListWidth(rect.width);
+      }
+    };
+    updateWidth();
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const width = entry.target.getBoundingClientRect().width;
+        if (width > 0) {
+          setMeasuredTaskListWidth(width);
+        }
+      }
+    });
+    observer.observe(element);
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
   const [scrollTopState, setScrollTopState] = React.useState(0);
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 });
   const [selectedTask, setSelectedTaskState] = React.useState(void 0);
   const [interactionState, setInteractionState] = React.useState({ action: "" });
   const [, setFailedTask] = React.useState(null);
   const ganttFullHeight = renderedTasks.length * rowHeight;
-  const viewHeight = ganttHeight && ganttHeight > 0 ? ganttHeight : 500;
+  const viewHeight = measuredHeight;
   const startIndex = Math.max(0, Math.floor(scrollTopState / rowHeight) - 3);
   const endIndex = Math.min(
     renderedTasks.length - 1,
@@ -1801,13 +1871,21 @@ const Gantt = ({
   React.useEffect(() => {
     setTaskListWidth(taskListWidthNumber);
   }, [taskListWidthNumber]);
+  const effectiveTaskListWidth = React.useMemo(() => {
+    if (!hasResized && listCellWidth === "auto") {
+      return measuredTaskListWidth || taskListWidth;
+    }
+    return taskListWidth;
+  }, [hasResized, listCellWidth, measuredTaskListWidth, taskListWidth]);
   const [isResizing, setIsResizing] = React.useState(false);
   const resizerRef = React.useRef(null);
   const handleResizerMouseDown = React.useCallback((e) => {
-    resizerRef.current = { startX: e.clientX, startWidth: taskListWidth };
+    const startWidth = listCellWidth === "auto" && !hasResized ? measuredTaskListWidth || taskListWidth : taskListWidth;
+    resizerRef.current = { startX: e.clientX, startWidth };
     setIsResizing(true);
+    setHasResized(true);
     e.preventDefault();
-  }, [taskListWidth]);
+  }, [taskListWidth, listCellWidth, hasResized, measuredTaskListWidth]);
   React.useEffect(() => {
     const handleGlobalMouseMove = (e) => {
       if (!isResizing || !resizerRef.current) return;
@@ -1927,7 +2005,7 @@ const Gantt = ({
       style: {
         fontFamily,
         fontSize,
-        height: viewHeight,
+        height: ganttHeight && ganttHeight !== 0 ? ganttHeight : "100%",
         width: "100%",
         overflow: "auto",
         position: "relative"
@@ -1938,7 +2016,7 @@ const Gantt = ({
           className: "ganttWrapper",
           style: {
             display: "flex",
-            width: taskListWidth + svgWidth + 6,
+            width: effectiveTaskListWidth + svgWidth + 6,
             // リサイザーの幅分追加
             height: ganttFullHeight + headerHeight,
             position: "relative",
@@ -1946,22 +2024,35 @@ const Gantt = ({
           },
           children: [
             /* @__PURE__ */ jsxRuntime.jsx(
-              TaskList,
+              "div",
               {
-                tasks: renderedTasks,
-                visibleTasks: visibleRenderedTasks,
-                rowWidth: `${taskListWidth}px`,
-                taskListWidth,
-                rowHeight,
-                headerHeight,
-                fontFamily,
-                fontSize,
-                locale,
-                selectedTaskId: (selectedTask == null ? void 0 : selectedTask.id) || "",
-                setSelectedTask,
-                onExpanderClick: handleExpanderClick,
-                TaskListHeader,
-                TaskListTable
+                ref: taskListRef,
+                style: {
+                  flex: "none",
+                  position: "sticky",
+                  left: 0,
+                  zIndex: 20,
+                  width: listCellWidth === "auto" && !hasResized ? "auto" : `${effectiveTaskListWidth}px`
+                },
+                children: /* @__PURE__ */ jsxRuntime.jsx(
+                  TaskList,
+                  {
+                    tasks: renderedTasks,
+                    visibleTasks: visibleRenderedTasks,
+                    rowWidth: listCellWidth === "auto" && !hasResized ? "auto" : `${effectiveTaskListWidth}px`,
+                    taskListWidth: effectiveTaskListWidth,
+                    rowHeight,
+                    headerHeight,
+                    fontFamily,
+                    fontSize,
+                    locale,
+                    selectedTaskId: (selectedTask == null ? void 0 : selectedTask.id) || "",
+                    setSelectedTask,
+                    onExpanderClick: handleExpanderClick,
+                    TaskListHeader,
+                    TaskListTable
+                  }
+                )
               }
             ),
             /* @__PURE__ */ jsxRuntime.jsx(
@@ -1972,6 +2063,8 @@ const Gantt = ({
                 style: {
                   width: "6px",
                   cursor: "col-resize",
+                  position: "sticky",
+                  left: effectiveTaskListWidth,
                   zIndex: 30,
                   flexShrink: 0,
                   transition: "background-color 0.2s"
