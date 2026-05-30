@@ -1,6 +1,6 @@
 {
   "name": "@matsu1321/react-gantt-chart",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Highly performant, interactive Gantt Chart component for React with virtual scrolling support.",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
