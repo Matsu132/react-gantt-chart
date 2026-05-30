@@ -1,5 +1,7 @@
 # @matsu1321/react-gantt-chart
 
+[demo](https://demonstration-ecru.vercel.app/react-gantt-chart)
+
 [![npm version](https://badge.fury.io/js/%40matsu1321%2Freact-gantt-chart.svg)](https://badge.fury.io/js/%40matsu1321%2Freact-gantt-chart)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -103,16 +105,22 @@ export const MyGanttChart = () => {
   const [view, setView] = useState<ViewMode>(ViewMode.Day);
 
   const handleDateChange = (updatedTask: Task, _children: Task[]) => {
-    setTasks((prev) => prev.map((t) => (t.id === updatedTask.id ? updatedTask : t)));
+    setTasks((prev) =>
+      prev.map((t) => (t.id === updatedTask.id ? updatedTask : t)),
+    );
   };
 
   const handleProgressChange = (updatedTask: Task, _children: Task[]) => {
-    setTasks((prev) => prev.map((t) => (t.id === updatedTask.id ? updatedTask : t)));
+    setTasks((prev) =>
+      prev.map((t) => (t.id === updatedTask.id ? updatedTask : t)),
+    );
   };
 
   const handleExpanderClick = (task: Task) => {
     setTasks((prev) =>
-      prev.map((t) => (t.id === task.id ? { ...t, hideChildren: !t.hideChildren } : t)),
+      prev.map((t) =>
+        t.id === task.id ? { ...t, hideChildren: !t.hideChildren } : t,
+      ),
     );
   };
 
@@ -121,7 +129,7 @@ export const MyGanttChart = () => {
       <Gantt
         tasks={tasks}
         viewMode={view}
-        locale="en-US"
+        locale='en-US'
         ganttHeight={500}
         onDateChange={handleDateChange}
         onProgressChange={handleProgressChange}
@@ -138,32 +146,32 @@ export const MyGanttChart = () => {
 
 #### `Task` Interface
 
-| Property | Type | Required | Description |
-| :--- | :--- | :---: | :--- |
-| `id` | `string` | ✅ | Unique identifier for the task |
-| `name` | `string` | ✅ | Display name of the task |
-| `start` | `Date` | ✅ | Start date of the task |
-| `end` | `Date` | ✅ | End date of the task |
-| `type` | `'task' \| 'project' \| 'milestone'` | ✅ | Task type |
-| `progress` | `number` | ✅ | Progress percentage (0–100) |
-| `displayOrder` | `number` | | Display order index |
-| `project` | `string` | | Parent project ID |
-| `dependencies` | `string[]` | | Array of dependency task IDs |
-| `hideChildren` | `boolean` | | Whether to collapse child tasks (for `project` type) |
-| `isDisabled` | `boolean` | | Disables all interactions for this task |
-| `styles` | `TaskStyles` | | Per-task color customization (see [Styling](#styling)) |
+| Property       | Type                                 | Required | Description                                            |
+| :------------- | :----------------------------------- | :------: | :----------------------------------------------------- |
+| `id`           | `string`                             |    ✅    | Unique identifier for the task                         |
+| `name`         | `string`                             |    ✅    | Display name of the task                               |
+| `start`        | `Date`                               |    ✅    | Start date of the task                                 |
+| `end`          | `Date`                               |    ✅    | End date of the task                                   |
+| `type`         | `'task' \| 'project' \| 'milestone'` |    ✅    | Task type                                              |
+| `progress`     | `number`                             |    ✅    | Progress percentage (0–100)                            |
+| `displayOrder` | `number`                             |          | Display order index                                    |
+| `project`      | `string`                             |          | Parent project ID                                      |
+| `dependencies` | `string[]`                           |          | Array of dependency task IDs                           |
+| `hideChildren` | `boolean`                            |          | Whether to collapse child tasks (for `project` type)   |
+| `isDisabled`   | `boolean`                            |          | Disables all interactions for this task                |
+| `styles`       | `TaskStyles`                         |          | Per-task color customization (see [Styling](#styling)) |
 
 #### `ViewMode` Enum
 
 ```ts
 enum ViewMode {
-  Hour       = "Hour",
-  QuarterDay = "Quarter Day",
-  HalfDay    = "Half Day",
-  Day        = "Day",
-  Week       = "Week",
-  Month      = "Month",
-  Year       = "Year",
+  Hour = 'Hour',
+  QuarterDay = 'Quarter Day',
+  HalfDay = 'Half Day',
+  Day = 'Day',
+  Week = 'Week',
+  Month = 'Month',
+  Year = 'Year',
 }
 ```
 
@@ -171,65 +179,65 @@ enum ViewMode {
 
 **Display Options**
 
-| Property | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `tasks` | `Task[]` | **Required** | Array of tasks to display |
-| `viewMode` | `ViewMode` | `ViewMode.Day` | Calendar time scale |
-| `locale` | `string` | `"en-GB"` | Locale string (e.g., `"en-US"`, `"ja-JP"`) |
-| `ganttHeight` | `number \| string` | `0` (auto) | Total height of the Gantt chart (px or CSS string) |
-| `rowHeight` | `number` | `50` | Height per task row (px) |
-| `headerHeight` | `number` | `50` | Height of calendar and table headers (px) |
-| `columnWidth` | `number` | *ViewMode dependent* | Width per date column (px) |
-| `listCellWidth` | `string` | `"155px"` | Width of the left task-name list |
-| `rtl` | `boolean` | `false` | Enable Right-to-Left (RTL) layout |
-| `viewDate` | `Date` | | Date to scroll the calendar to on mount |
-| `preStepsCount` | `number` | | Number of column steps to prepend before the first task |
+| Property        | Type               | Default              | Description                                             |
+| :-------------- | :----------------- | :------------------- | :------------------------------------------------------ |
+| `tasks`         | `Task[]`           | **Required**         | Array of tasks to display                               |
+| `viewMode`      | `ViewMode`         | `ViewMode.Day`       | Calendar time scale                                     |
+| `locale`        | `string`           | `"en-GB"`            | Locale string (e.g., `"en-US"`, `"ja-JP"`)              |
+| `ganttHeight`   | `number \| string` | `0` (auto)           | Total height of the Gantt chart (px or CSS string)      |
+| `rowHeight`     | `number`           | `50`                 | Height per task row (px)                                |
+| `headerHeight`  | `number`           | `50`                 | Height of calendar and table headers (px)               |
+| `columnWidth`   | `number`           | _ViewMode dependent_ | Width per date column (px)                              |
+| `listCellWidth` | `string`           | `"155px"`            | Width of the left task-name list                        |
+| `rtl`           | `boolean`          | `false`              | Enable Right-to-Left (RTL) layout                       |
+| `viewDate`      | `Date`             |                      | Date to scroll the calendar to on mount                 |
+| `preStepsCount` | `number`           |                      | Number of column steps to prepend before the first task |
 
 **Styling Options**
 
-| Property | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `barFill` | `number` | `60` | Task bar height ratio relative to row height (%) |
-| `barCornerRadius` | `number` | `3` | Task bar border-radius (px) |
-| `handleWidth` | `number` | `8` | Drag-handle detection width for resizing (px) |
-| `fontFamily` | `string` | `"Arial, ..."` | Font family for the entire chart |
-| `fontSize` | `string` | `"14px"` | Font size for the entire chart |
-| `todayColor` | `string` | `"rgba(...)"` | Background color of the "today" grid column |
-| `arrowColor` | `string` | | Color of dependency arrows |
-| `arrowIndent` | `number` | | Indent of dependency arrows (px) |
-| `barProgressColor` | `string` | | Progress fill color for task bars |
-| `barProgressSelectedColor` | `string` | | Progress fill color when a task bar is selected |
-| `barBackgroundColor` | `string` | | Background color of task bars |
-| `barBackgroundSelectedColor` | `string` | | Background color when a task bar is selected |
-| `projectProgressColor` | `string` | | Progress fill color for project bars |
-| `projectProgressSelectedColor` | `string` | | Progress fill color when a project bar is selected |
-| `projectBackgroundColor` | `string` | | Background color of project bars |
-| `projectBackgroundSelectedColor` | `string` | | Background color when a project bar is selected |
-| `milestoneBackgroundColor` | `string` | | Background color of milestones |
-| `milestoneBackgroundSelectedColor` | `string` | | Background color when a milestone is selected |
+| Property                           | Type     | Default        | Description                                        |
+| :--------------------------------- | :------- | :------------- | :------------------------------------------------- |
+| `barFill`                          | `number` | `60`           | Task bar height ratio relative to row height (%)   |
+| `barCornerRadius`                  | `number` | `3`            | Task bar border-radius (px)                        |
+| `handleWidth`                      | `number` | `8`            | Drag-handle detection width for resizing (px)      |
+| `fontFamily`                       | `string` | `"Arial, ..."` | Font family for the entire chart                   |
+| `fontSize`                         | `string` | `"14px"`       | Font size for the entire chart                     |
+| `todayColor`                       | `string` | `"rgba(...)"`  | Background color of the "today" grid column        |
+| `arrowColor`                       | `string` |                | Color of dependency arrows                         |
+| `arrowIndent`                      | `number` |                | Indent of dependency arrows (px)                   |
+| `barProgressColor`                 | `string` |                | Progress fill color for task bars                  |
+| `barProgressSelectedColor`         | `string` |                | Progress fill color when a task bar is selected    |
+| `barBackgroundColor`               | `string` |                | Background color of task bars                      |
+| `barBackgroundSelectedColor`       | `string` |                | Background color when a task bar is selected       |
+| `projectProgressColor`             | `string` |                | Progress fill color for project bars               |
+| `projectProgressSelectedColor`     | `string` |                | Progress fill color when a project bar is selected |
+| `projectBackgroundColor`           | `string` |                | Background color of project bars                   |
+| `projectBackgroundSelectedColor`   | `string` |                | Background color when a project bar is selected    |
+| `milestoneBackgroundColor`         | `string` |                | Background color of milestones                     |
+| `milestoneBackgroundSelectedColor` | `string` |                | Background color when a milestone is selected      |
 
 **Event Handlers**
 
-| Event | Signature | Description |
-| :--- | :--- | :--- |
-| `onDateChange` | `(task: Task, children: Task[]) => void \| boolean \| Promise<void \| boolean>` | Fired when a task's period is changed by dragging or resizing. Return `false` to undo. |
-| `onProgressChange` | `(task: Task, children: Task[]) => void \| boolean \| Promise<void \| boolean>` | Fired when the progress handle is dragged. Return `false` to undo. |
-| `onExpanderClick` | `(task: Task) => void` | Fired when a project's expand/collapse icon is clicked |
-| `onSelect` | `(task: Task, isSelected: boolean) => void` | Fired when a task is clicked and its selection state changes |
-| `onDoubleClick` | `(task: Task) => void` | Fired when a task is double-clicked |
-| `onClick` | `(task: Task) => void` | Fired when a task is single-clicked |
-| `onDelete` | `(task: Task) => void \| boolean \| Promise<void \| boolean>` | Fired when a task deletion is triggered. Return `false` to undo. |
-| `timeStep` | `number` | Time step in milliseconds applied when dragging a task |
+| Event              | Signature                                                                       | Description                                                                            |
+| :----------------- | :------------------------------------------------------------------------------ | :------------------------------------------------------------------------------------- |
+| `onDateChange`     | `(task: Task, children: Task[]) => void \| boolean \| Promise<void \| boolean>` | Fired when a task's period is changed by dragging or resizing. Return `false` to undo. |
+| `onProgressChange` | `(task: Task, children: Task[]) => void \| boolean \| Promise<void \| boolean>` | Fired when the progress handle is dragged. Return `false` to undo.                     |
+| `onExpanderClick`  | `(task: Task) => void`                                                          | Fired when a project's expand/collapse icon is clicked                                 |
+| `onSelect`         | `(task: Task, isSelected: boolean) => void`                                     | Fired when a task is clicked and its selection state changes                           |
+| `onDoubleClick`    | `(task: Task) => void`                                                          | Fired when a task is double-clicked                                                    |
+| `onClick`          | `(task: Task) => void`                                                          | Fired when a task is single-clicked                                                    |
+| `onDelete`         | `(task: Task) => void \| boolean \| Promise<void \| boolean>`                   | Fired when a task deletion is triggered. Return `false` to undo.                       |
+| `timeStep`         | `number`                                                                        | Time step in milliseconds applied when dragging a task                                 |
 
 **Custom Render Props**
 
-| Property | Type | Description |
-| :--- | :--- | :--- |
-| `calendarTopHeaderFormat` | `(date: Date, viewMode: ViewMode) => string` | Custom formatter for the top row of the calendar header |
-| `calendarBottomHeaderFormat` | `(date: Date, viewMode: ViewMode) => string` | Custom formatter for the bottom row of the calendar header |
-| `TooltipContent` | `React.FC<{ task, fontSize, fontFamily }>` | Custom tooltip component shown on task hover |
-| `TaskListHeader` | `React.FC<{ headerHeight, rowWidth, fontFamily, fontSize }>` | Custom component for the task list header |
-| `TaskListTable` | `React.FC<{ rowHeight, rowWidth, fontFamily, fontSize, locale, tasks, selectedTaskId, setSelectedTask, onExpanderClick }>` | Custom component for the task list rows |
+| Property                     | Type                                                                                                                       | Description                                                |
+| :--------------------------- | :------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------- |
+| `calendarTopHeaderFormat`    | `(date: Date, viewMode: ViewMode) => string`                                                                               | Custom formatter for the top row of the calendar header    |
+| `calendarBottomHeaderFormat` | `(date: Date, viewMode: ViewMode) => string`                                                                               | Custom formatter for the bottom row of the calendar header |
+| `TooltipContent`             | `React.FC<{ task, fontSize, fontFamily }>`                                                                                 | Custom tooltip component shown on task hover               |
+| `TaskListHeader`             | `React.FC<{ headerHeight, rowWidth, fontFamily, fontSize }>`                                                               | Custom component for the task list header                  |
+| `TaskListTable`              | `React.FC<{ rowHeight, rowWidth, fontFamily, fontSize, locale, tasks, selectedTaskId, setSelectedTask, onExpanderClick }>` | Custom component for the task list rows                    |
 
 ---
 
@@ -273,6 +281,7 @@ import '@matsu1321/react-gantt-chart/dist/style.css';
 MIT
 
 ---
+
 ---
 
 <a id="japanese"></a>
@@ -369,16 +378,22 @@ export const MyGanttChart = () => {
   const [view, setView] = useState<ViewMode>(ViewMode.Day);
 
   const handleDateChange = (updatedTask: Task, _children: Task[]) => {
-    setTasks((prev) => prev.map((t) => (t.id === updatedTask.id ? updatedTask : t)));
+    setTasks((prev) =>
+      prev.map((t) => (t.id === updatedTask.id ? updatedTask : t)),
+    );
   };
 
   const handleProgressChange = (updatedTask: Task, _children: Task[]) => {
-    setTasks((prev) => prev.map((t) => (t.id === updatedTask.id ? updatedTask : t)));
+    setTasks((prev) =>
+      prev.map((t) => (t.id === updatedTask.id ? updatedTask : t)),
+    );
   };
 
   const handleExpanderClick = (task: Task) => {
     setTasks((prev) =>
-      prev.map((t) => (t.id === task.id ? { ...t, hideChildren: !t.hideChildren } : t)),
+      prev.map((t) =>
+        t.id === task.id ? { ...t, hideChildren: !t.hideChildren } : t,
+      ),
     );
   };
 
@@ -387,7 +402,7 @@ export const MyGanttChart = () => {
       <Gantt
         tasks={tasks}
         viewMode={view}
-        locale="ja-JP"
+        locale='ja-JP'
         ganttHeight={500}
         onDateChange={handleDateChange}
         onProgressChange={handleProgressChange}
@@ -404,32 +419,32 @@ export const MyGanttChart = () => {
 
 #### `Task` インターフェース
 
-| プロパティ名 | 型 | 必須 | 説明 |
-| :--- | :--- | :---: | :--- |
-| `id` | `string` | ✅ | タスクの一意識別子 |
-| `name` | `string` | ✅ | タスクの表示名 |
-| `start` | `Date` | ✅ | タスクの開始日 |
-| `end` | `Date` | ✅ | タスクの終了日 |
-| `type` | `'task' \| 'project' \| 'milestone'` | ✅ | タスクの種別 |
-| `progress` | `number` | ✅ | 進捗率（0〜100） |
-| `displayOrder` | `number` | | 表示順のインデックス |
-| `project` | `string` | | 親プロジェクトのID |
-| `dependencies` | `string[]` | | 依存するタスクIDの配列 |
-| `hideChildren` | `boolean` | | 子タスクを折りたたむか（`project` 型のみ） |
-| `isDisabled` | `boolean` | | このタスクのすべてのインタラクションを無効化する |
-| `styles` | `TaskStyles` | | タスクごとの個別カラー設定（[スタイリング](#styling-ja) 参照） |
+| プロパティ名   | 型                                   | 必須 | 説明                                                           |
+| :------------- | :----------------------------------- | :--: | :------------------------------------------------------------- |
+| `id`           | `string`                             |  ✅  | タスクの一意識別子                                             |
+| `name`         | `string`                             |  ✅  | タスクの表示名                                                 |
+| `start`        | `Date`                               |  ✅  | タスクの開始日                                                 |
+| `end`          | `Date`                               |  ✅  | タスクの終了日                                                 |
+| `type`         | `'task' \| 'project' \| 'milestone'` |  ✅  | タスクの種別                                                   |
+| `progress`     | `number`                             |  ✅  | 進捗率（0〜100）                                               |
+| `displayOrder` | `number`                             |      | 表示順のインデックス                                           |
+| `project`      | `string`                             |      | 親プロジェクトのID                                             |
+| `dependencies` | `string[]`                           |      | 依存するタスクIDの配列                                         |
+| `hideChildren` | `boolean`                            |      | 子タスクを折りたたむか（`project` 型のみ）                     |
+| `isDisabled`   | `boolean`                            |      | このタスクのすべてのインタラクションを無効化する               |
+| `styles`       | `TaskStyles`                         |      | タスクごとの個別カラー設定（[スタイリング](#styling-ja) 参照） |
 
 #### `ViewMode` 列挙型
 
 ```ts
 enum ViewMode {
-  Hour       = "Hour",       // 時間
-  QuarterDay = "Quarter Day", // 6時間
-  HalfDay    = "Half Day",   // 半日
-  Day        = "Day",        // 日
-  Week       = "Week",       // 週
-  Month      = "Month",      // 月
-  Year       = "Year",       // 年
+  Hour = 'Hour', // 時間
+  QuarterDay = 'Quarter Day', // 6時間
+  HalfDay = 'Half Day', // 半日
+  Day = 'Day', // 日
+  Week = 'Week', // 週
+  Month = 'Month', // 月
+  Year = 'Year', // 年
 }
 ```
 
@@ -437,65 +452,65 @@ enum ViewMode {
 
 **表示設定**
 
-| プロパティ名 | 型 | デフォルト値 | 説明 |
-| :--- | :--- | :--- | :--- |
-| `tasks` | `Task[]` | **必須** | 表示対象のタスク配列 |
-| `viewMode` | `ViewMode` | `ViewMode.Day` | カレンダーのタイムスケール（表示単位） |
-| `locale` | `string` | `"en-GB"` | ローカライズ設定。日本語表示は `"ja-JP"` を指定 |
-| `ganttHeight` | `number \| string` | `0`（自動） | ガントチャート全体の高さ（px または CSS 文字列） |
-| `rowHeight` | `number` | `50` | タスク行あたりの高さ（px） |
-| `headerHeight` | `number` | `50` | カレンダーヘッダーの高さ（px） |
-| `columnWidth` | `number` | *ViewMode 依存* | 日付列あたりの幅（px） |
-| `listCellWidth` | `string` | `"155px"` | 左側タスク名リスト全体の横幅 |
-| `rtl` | `boolean` | `false` | 右から左（RTL）レイアウト表示 |
-| `viewDate` | `Date` | | マウント時にスクロールする日付 |
-| `preStepsCount` | `number` | | 最初のタスクの前に追加する列ステップ数 |
+| プロパティ名    | 型                 | デフォルト値    | 説明                                             |
+| :-------------- | :----------------- | :-------------- | :----------------------------------------------- |
+| `tasks`         | `Task[]`           | **必須**        | 表示対象のタスク配列                             |
+| `viewMode`      | `ViewMode`         | `ViewMode.Day`  | カレンダーのタイムスケール（表示単位）           |
+| `locale`        | `string`           | `"en-GB"`       | ローカライズ設定。日本語表示は `"ja-JP"` を指定  |
+| `ganttHeight`   | `number \| string` | `0`（自動）     | ガントチャート全体の高さ（px または CSS 文字列） |
+| `rowHeight`     | `number`           | `50`            | タスク行あたりの高さ（px）                       |
+| `headerHeight`  | `number`           | `50`            | カレンダーヘッダーの高さ（px）                   |
+| `columnWidth`   | `number`           | _ViewMode 依存_ | 日付列あたりの幅（px）                           |
+| `listCellWidth` | `string`           | `"155px"`       | 左側タスク名リスト全体の横幅                     |
+| `rtl`           | `boolean`          | `false`         | 右から左（RTL）レイアウト表示                    |
+| `viewDate`      | `Date`             |                 | マウント時にスクロールする日付                   |
+| `preStepsCount` | `number`           |                 | 最初のタスクの前に追加する列ステップ数           |
 
 **スタイリング設定**
 
-| プロパティ名 | 型 | デフォルト値 | 説明 |
-| :--- | :--- | :--- | :--- |
-| `barFill` | `number` | `60` | 行高さに対してタスクバーが占める縦幅の割合 (%) |
-| `barCornerRadius` | `number` | `3` | タスクバーの角丸半径（px） |
-| `handleWidth` | `number` | `8` | リサイズ操作時の左右ドラッグ検出幅（px） |
-| `fontFamily` | `string` | `"Arial, ..."` | チャート全体のフォントファミリー |
-| `fontSize` | `string` | `"14px"` | チャート全体のフォントサイズ |
-| `todayColor` | `string` | `"rgba(...)"` | 「今日」の日付列を示すグリッド背景色 |
-| `arrowColor` | `string` | | 依存関係矢印の色 |
-| `arrowIndent` | `number` | | 依存関係矢印のインデント（px） |
-| `barProgressColor` | `string` | | タスクバーの進捗塗りつぶし色 |
-| `barProgressSelectedColor` | `string` | | 選択時のタスクバー進捗塗りつぶし色 |
-| `barBackgroundColor` | `string` | | タスクバーの背景色 |
-| `barBackgroundSelectedColor` | `string` | | 選択時のタスクバー背景色 |
-| `projectProgressColor` | `string` | | プロジェクトバーの進捗塗りつぶし色 |
-| `projectProgressSelectedColor` | `string` | | 選択時のプロジェクトバー進捗塗りつぶし色 |
-| `projectBackgroundColor` | `string` | | プロジェクトバーの背景色 |
-| `projectBackgroundSelectedColor` | `string` | | 選択時のプロジェクトバー背景色 |
-| `milestoneBackgroundColor` | `string` | | マイルストーンの背景色 |
-| `milestoneBackgroundSelectedColor` | `string` | | 選択時のマイルストーン背景色 |
+| プロパティ名                       | 型       | デフォルト値   | 説明                                           |
+| :--------------------------------- | :------- | :------------- | :--------------------------------------------- |
+| `barFill`                          | `number` | `60`           | 行高さに対してタスクバーが占める縦幅の割合 (%) |
+| `barCornerRadius`                  | `number` | `3`            | タスクバーの角丸半径（px）                     |
+| `handleWidth`                      | `number` | `8`            | リサイズ操作時の左右ドラッグ検出幅（px）       |
+| `fontFamily`                       | `string` | `"Arial, ..."` | チャート全体のフォントファミリー               |
+| `fontSize`                         | `string` | `"14px"`       | チャート全体のフォントサイズ                   |
+| `todayColor`                       | `string` | `"rgba(...)"`  | 「今日」の日付列を示すグリッド背景色           |
+| `arrowColor`                       | `string` |                | 依存関係矢印の色                               |
+| `arrowIndent`                      | `number` |                | 依存関係矢印のインデント（px）                 |
+| `barProgressColor`                 | `string` |                | タスクバーの進捗塗りつぶし色                   |
+| `barProgressSelectedColor`         | `string` |                | 選択時のタスクバー進捗塗りつぶし色             |
+| `barBackgroundColor`               | `string` |                | タスクバーの背景色                             |
+| `barBackgroundSelectedColor`       | `string` |                | 選択時のタスクバー背景色                       |
+| `projectProgressColor`             | `string` |                | プロジェクトバーの進捗塗りつぶし色             |
+| `projectProgressSelectedColor`     | `string` |                | 選択時のプロジェクトバー進捗塗りつぶし色       |
+| `projectBackgroundColor`           | `string` |                | プロジェクトバーの背景色                       |
+| `projectBackgroundSelectedColor`   | `string` |                | 選択時のプロジェクトバー背景色                 |
+| `milestoneBackgroundColor`         | `string` |                | マイルストーンの背景色                         |
+| `milestoneBackgroundSelectedColor` | `string` |                | 選択時のマイルストーン背景色                   |
 
 **イベントハンドラー**
 
-| イベント名 | シグネチャ | 説明 |
-| :--- | :--- | :--- |
-| `onDateChange` | `(task: Task, children: Task[]) => void \| boolean \| Promise<void \| boolean>` | ドラッグによるタスク期間変更・リサイズが完了したときに呼ばれます。`false` を返すと操作を取り消します |
-| `onProgressChange` | `(task: Task, children: Task[]) => void \| boolean \| Promise<void \| boolean>` | 進捗率変更ハンドルをドラッグしたときに呼ばれます。`false` を返すと操作を取り消します |
-| `onExpanderClick` | `(task: Task) => void` | プロジェクトの展開・縮小アイコンをクリックしたときに呼ばれます |
-| `onSelect` | `(task: Task, isSelected: boolean) => void` | タスクをクリックして選択状態が切り替わったときに呼ばれます |
-| `onDoubleClick` | `(task: Task) => void` | タスクをダブルクリックしたときに呼ばれます |
-| `onClick` | `(task: Task) => void` | タスクをシングルクリックしたときに呼ばれます |
-| `onDelete` | `(task: Task) => void \| boolean \| Promise<void \| boolean>` | タスクの削除操作が行われたときに呼ばれます。`false` を返すと操作を取り消します |
-| `timeStep` | `number` | タスクをドラッグ操作する際の時間ステップ（ミリ秒） |
+| イベント名         | シグネチャ                                                                      | 説明                                                                                                 |
+| :----------------- | :------------------------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------- |
+| `onDateChange`     | `(task: Task, children: Task[]) => void \| boolean \| Promise<void \| boolean>` | ドラッグによるタスク期間変更・リサイズが完了したときに呼ばれます。`false` を返すと操作を取り消します |
+| `onProgressChange` | `(task: Task, children: Task[]) => void \| boolean \| Promise<void \| boolean>` | 進捗率変更ハンドルをドラッグしたときに呼ばれます。`false` を返すと操作を取り消します                 |
+| `onExpanderClick`  | `(task: Task) => void`                                                          | プロジェクトの展開・縮小アイコンをクリックしたときに呼ばれます                                       |
+| `onSelect`         | `(task: Task, isSelected: boolean) => void`                                     | タスクをクリックして選択状態が切り替わったときに呼ばれます                                           |
+| `onDoubleClick`    | `(task: Task) => void`                                                          | タスクをダブルクリックしたときに呼ばれます                                                           |
+| `onClick`          | `(task: Task) => void`                                                          | タスクをシングルクリックしたときに呼ばれます                                                         |
+| `onDelete`         | `(task: Task) => void \| boolean \| Promise<void \| boolean>`                   | タスクの削除操作が行われたときに呼ばれます。`false` を返すと操作を取り消します                       |
+| `timeStep`         | `number`                                                                        | タスクをドラッグ操作する際の時間ステップ（ミリ秒）                                                   |
 
 **カスタムレンダリング Props**
 
-| プロパティ名 | 型 | 説明 |
-| :--- | :--- | :--- |
-| `calendarTopHeaderFormat` | `(date: Date, viewMode: ViewMode) => string` | カレンダーヘッダー上段の日付表示をカスタムするフォーマッター |
-| `calendarBottomHeaderFormat` | `(date: Date, viewMode: ViewMode) => string` | カレンダーヘッダー下段の日付表示をカスタムするフォーマッター |
-| `TooltipContent` | `React.FC<{ task, fontSize, fontFamily }>` | タスクホバー時に表示されるカスタムツールチップコンポーネント |
-| `TaskListHeader` | `React.FC<{ headerHeight, rowWidth, fontFamily, fontSize }>` | タスクリストのヘッダーをカスタムするコンポーネント |
-| `TaskListTable` | `React.FC<{ rowHeight, rowWidth, fontFamily, fontSize, locale, tasks, selectedTaskId, setSelectedTask, onExpanderClick }>` | タスクリストの行をカスタムするコンポーネント |
+| プロパティ名                 | 型                                                                                                                         | 説明                                                         |
+| :--------------------------- | :------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------- |
+| `calendarTopHeaderFormat`    | `(date: Date, viewMode: ViewMode) => string`                                                                               | カレンダーヘッダー上段の日付表示をカスタムするフォーマッター |
+| `calendarBottomHeaderFormat` | `(date: Date, viewMode: ViewMode) => string`                                                                               | カレンダーヘッダー下段の日付表示をカスタムするフォーマッター |
+| `TooltipContent`             | `React.FC<{ task, fontSize, fontFamily }>`                                                                                 | タスクホバー時に表示されるカスタムツールチップコンポーネント |
+| `TaskListHeader`             | `React.FC<{ headerHeight, rowWidth, fontFamily, fontSize }>`                                                               | タスクリストのヘッダーをカスタムするコンポーネント           |
+| `TaskListTable`              | `React.FC<{ rowHeight, rowWidth, fontFamily, fontSize, locale, tasks, selectedTaskId, setSelectedTask, onExpanderClick }>` | タスクリストの行をカスタムするコンポーネント                 |
 
 ---
 
